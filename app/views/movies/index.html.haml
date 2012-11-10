@@ -4,9 +4,11 @@
 %table#movies
   %thead
     %tr
-      %th Movie Title
+      %th
+        %a{:id => 'title_header', :href => movie_path} Movie Title
       %th Rating
-      %th Release Date
+      %th
+        %a{id: => 'release_date_header'}Release Date
       %th More Info
   %tbody
     - @movies.each do |movie|
