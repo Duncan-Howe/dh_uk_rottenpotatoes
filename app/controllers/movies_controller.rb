@@ -13,16 +13,14 @@ class MoviesController < ApplicationController
     if params[:sortBy] != nil
       sortBy = params[:sortBy]
     end
-    if params[:sortOrder]!=nil
-      sortOrder = params[:sortOrder]
-    end
-    sortString = sortBy + ' ' + sortOrder
-    #need to capture sort oder for title and release date
-    #to be able to toggle them through to the view
-    
-    debugger
+    #if params[:sortOrder]!=nil
+    #  sortOrder = params[:sortOrder]
+    #end
+    sortString = sortBy #+ ' ' + sortOrder
+        
+    #debugger
     @movies = Movie.find(:all, :order => sortString)
-    debugger
+    #debugger
   end
 
   def new
