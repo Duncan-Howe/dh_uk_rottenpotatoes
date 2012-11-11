@@ -17,7 +17,15 @@ class MoviesController < ApplicationController
     #  sortOrder = params[:sortOrder]
     #end
     sortString = sortBy #+ ' ' + sortOrder
-        
+    @movieTitleStyle = ""
+    @movieRDateStyle = ""
+
+    if sortBy=="title"
+      @movieTitleStyle="hilite"
+    elsif sortBy=="release_date"
+      @movieRDateStyle="hilite"
+    end
+      
     #debugger
     @movies = Movie.find(:all, :order => sortString)
     #debugger

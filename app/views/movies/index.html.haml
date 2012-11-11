@@ -4,10 +4,10 @@
 %table#movies
   %thead
     %tr
-      %th
+      %th{:class => @movieTitleStyle}
         %a{:id => 'title_header', :href=> "#{movies_path}?sortBy=title&sortOrder=asc"} Movie Title
       %th Rating
-      %th
+      %th{:class => @movieRDateStyle}
         %a{:id => 'release_date_header', :href=> "#{movies_path}?sortBy=release_date&sortOrder=asc"} Release Date
       %th More Info
   %tbody
