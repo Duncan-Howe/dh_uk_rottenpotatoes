@@ -7,16 +7,13 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sortBy = 'release_date'
-    sortOrder = 'asc'
+    sortBy = 'id'
 
     if params[:sortBy] != nil
       sortBy = params[:sortBy]
     end
-    #if params[:sortOrder]!=nil
-    #  sortOrder = params[:sortOrder]
-    #end
-    sortString = sortBy #+ ' ' + sortOrder
+    
+    sortString = sortBy
     @movieTitleStyle = ""
     @movieRDateStyle = ""
 
