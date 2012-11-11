@@ -7,7 +7,22 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    sortBy = 'release_date'
+    sortOrder = 'asc'
+
+    if params[:sortBy] != nil
+      sortBy = params[:sortBy]
+    end
+    if params[:sortOrder]!=nil
+      sortOrder = params[:sortOrder]
+    end
+    sortString = sortBy + ' ' + sortOrder
+    #need to capture sort oder for title and release date
+    #to be able to toggle them through to the view
+    
+    debugger
+    @movies = Movie.find(:all, :order => sortString)
+    debugger
   end
 
   def new
