@@ -9,10 +9,15 @@ class MoviesController < ApplicationController
   def index
     sortBy = 'id'
 
+    #Persist the sort order
     if params[:sortBy] != nil
       sortBy = params[:sortBy]
+    elsif session["sortBy"]!=nil
+      sortBy = session["sortBy"]
     end
     
+    session["sortBy"] = sortBy
+
     sortString = sortBy
     @movieTitleStyle = ""
     @movieRDateStyle = ""
@@ -22,9 +27,25 @@ class MoviesController < ApplicationController
     elsif sortBy=="release_date"
       @movieRDateStyle="hilite"
     end
-      
-    #debugger
-    @movies = Movie.find(:all, :order => sortString)
+    
+    @all_ratings = Movie.getRatings
+    @selected_ratings = {}
+
+    debugger
+    if params[:ratings]==nil
+      session["selected_ratings"] = nil
+    elsif params[:ratings]!=nil
+      @selected_ratings = params[:ratings]
+    elsif session["selected_ratings"]!=nil
+      @selected_ratings = session["selected_ratings"]
+    end
+
+    if not @selected_ratings.empty?
+      @movies = Movie.where(:rating => @selected_ratings.keys).order(sortString)
+    else
+      @movies = Movie.find(:all, :order => sortString)
+    end
+    session["selected_ratings"] = @selected_ratings
     #debugger
   end
 
