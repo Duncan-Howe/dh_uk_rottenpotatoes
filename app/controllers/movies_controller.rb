@@ -29,24 +29,37 @@ class MoviesController < ApplicationController
     end
     
     @all_ratings = Movie.getRatings
-    @selected_ratings = {}
+    @selected_ratings = nil
 
-    debugger
-    if params[:ratings]==nil
-      session["selected_ratings"] = nil
-    elsif params[:ratings]!=nil
-      @selected_ratings = params[:ratings]
-    elsif session["selected_ratings"]!=nil
+    #Do we have new selected ratings?
+    if params[:ratings]!=nil
+      @selected_ratings = params[:ratings].keys
+    #Do we have persisted selected ratings?
+    elsif params[:ratings]==nil and session["selected_ratings"]!=nil
       @selected_ratings = session["selected_ratings"]
     end
 
-    if not @selected_ratings.empty?
-      @movies = Movie.where(:rating => @selected_ratings.keys).order(sortString)
+    # if session["selected_ratings"]!=nil
+    #   @selected_ratings = session["selected_ratings"]
+    # else
+    #   @selected_ratings = Array.new(@all_ratings)
+    # end
+
+    # debugger
+    # if params[:ratings]!=nil
+    #   @selected_ratings.clear
+    #   @selected_ratings = params[:ratings].keys
+    # elsif session["selected_ratings"]!=nil
+    #   @selected_ratings = session["selected_ratings"]
+    # end
+    debugger
+    if not @selected_ratings==nil
+      @movies = Movie.where(:rating => @selected_ratings).order(sortString)
     else
       @movies = Movie.find(:all, :order => sortString)
     end
+    debugger
     session["selected_ratings"] = @selected_ratings
-    #debugger
   end
 
   def new
